@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+	ul
+		each val, index in content
+			li #{content[index].title} - #{content[index].first_published} By: #{content[index].author}
+
+	- var n = 1;
+	ul
+		while n <= pagination
+			li: a(href=`/${n}`) Page #{n}
+			- n++
