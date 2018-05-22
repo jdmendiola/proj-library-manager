@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../models').Book;
+var Patron = require('../models').Patron;
 
 /* GET home page. */
 router.get('/:page', function (req, res, next) {
