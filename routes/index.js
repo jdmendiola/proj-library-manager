@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../models').Book;
-var Patron = require('../models').Patron;
 
 /* GET home page. */
 router.get('/:page', function (req, res, next) {
@@ -20,13 +19,15 @@ router.get('/:page', function (req, res, next) {
 
 		let pages = Math.ceil(book.count / pageLimit);
 
-		res.render('index', {
+		res.status(200).render('index', {
 			content: book.rows,
 			pagination: pages,
 			title: 'Express'
 		});
 
-	});
+	}).catch(function(err){
+        res.status(500).send('Critical error');
+    });
 
 });
 
