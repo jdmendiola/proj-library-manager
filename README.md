@@ -2,6 +2,5 @@
 
 *Getting Started*
 
-Run npm install to install the node packages
-
+Run npm install to install the node packages  
 Run npm start to run the express server
