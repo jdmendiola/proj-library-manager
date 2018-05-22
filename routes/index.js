@@ -1,20 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../models').Book;
-var Patron = require('../models').Patron;
 
 /* GET home page. */
+
+
+router.get('/create', function(req, res, next){
+	res.render('create', {content: {}, title: "Create"});
+});
+
+router.post('/', function(req, res, next){
+	Book.create(req.body).then(function(book){
+		console.log(book);
+		res.redirect('/create');
+	})
+});
+
 router.get('/:page', function (req, res, next) {
 
 	let page = req.params.page;
 	let pageLimit = 4;
-	let offset = (page - 1) * pageLimit;
+	let pageOffset = ((page - 1) * pageLimit);
 
 	Book.findAndCountAll({
 		order: [
 			['title']
 		],
-		offset: offset,
+		offset: pageOffset,
 		limit: pageLimit
 	}).then(function (book) {
 
