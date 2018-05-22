@@ -30,4 +30,8 @@ router.get('/:page', function (req, res, next) {
 
 });
 
+/*
+SELECT book_id, title AS "Book Title", first_name AS "Borrower Name", loaned_on AS "Borrowed on: " FROM loans, books, patrons WHERE book_id = 15 and loans.book_id = books.id AND loans.patron_id = patrons.id;
+*/
+
 module.exports = router;
