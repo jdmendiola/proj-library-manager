@@ -1,0 +1,9 @@
+extends layout
+
+block content
+
+	h1 List of Loans
+
+	ol
+		each val, index in content
+			li #{content[index].book_id} - #{content[index].Patron.first_name} - #{content[index].loaned_on} - #{content[index].return_by} - #{content[index].returned_on}

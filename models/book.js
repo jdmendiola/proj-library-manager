@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     genre: DataTypes.STRING,
     first_published: DataTypes.INTEGER
   }, {
-      timestamps: false
+      timestamps: false,
+      underscored: true
   });
   Book.associate = function(models) {
     // associations can be defined here

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../models').Book;
+var Loan = require('../models').Loan;
+var Patron = require('../models').Patron
 
 /*
 router.get('/create', function(req, res, next){
@@ -55,6 +57,17 @@ router.get('/books/all', function(req, res, next){
     }).then(function(book){
         res.render('all', {content: book})
     })
+});
+
+router.get('/loans/all', function(req, res, next){
+    Loan.findAll({
+        order: ['id'],
+        include: [{
+            model: Patron
+        }]    
+    }).then(function(loan){
+        res.render('loans', {content: loan})
+    });
 });
 
 /*
