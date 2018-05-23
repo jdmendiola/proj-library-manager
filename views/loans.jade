@@ -6,4 +6,4 @@ block content
 
 	ol
 		each val, index in content
-			li #{content[index].Book.title} - #{content[index].Patron.first_name} #{content[index].Patron.last_name} - #{content[index].loaned_on} - #{content[index].return_by} - #{content[index].returned_on}
+			li #{content[index].Book.title} - #{content[index].Patron.changeUpper()} #{content[index].Patron.last_name} - #{content[index].loaned_on} - #{content[index].return_by} - #{content[index].returned_on}

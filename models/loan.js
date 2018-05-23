@@ -19,5 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     Loan.belongsTo(models.Book);
     // associations can be defined here
   };
+
   return Loan;
 };

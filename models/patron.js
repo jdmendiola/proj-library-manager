@@ -19,5 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     Patron.hasMany(models.Loan)
     // associations can be defined here
   };
+
+  Patron.prototype.changeUpper = function (){
+    return this.first_name.toUpperCase();
+  }
+
   return Patron;
 };
