@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Loan.associate = function(models) {
     Loan.belongsTo(models.Patron);
+    Loan.belongsTo(models.Book);
     // associations can be defined here
   };
   return Loan;

@@ -62,10 +62,12 @@ router.get('/books/all', function(req, res, next){
 router.get('/loans/all', function(req, res, next){
     Loan.findAll({
         order: ['id'],
-        include: [{
-            model: Patron
-        }]    
+        include: [
+            {model: Patron},
+            {model: Book}
+        ]    
     }).then(function(loan){
+        console.log(loan[0].Book)
         res.render('loans', {content: loan})
     });
 });
