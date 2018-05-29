@@ -3,7 +3,7 @@ var router = express.Router();
 var Book = require('../../models').Book;
 
 router.get('/', function(req, res, next){
-    res.redirect('/1');
+    res.redirect('/books/page/1');
 });
 
 router.get('/page/:page', function (req, res, next) {
