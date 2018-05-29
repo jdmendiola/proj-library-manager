@@ -13,7 +13,6 @@ router.get('/page/:page', function (req, res, next) {
     let pageOffset = (pageNumber - 1) * pageLimit;
 
 	Book.findAndCountAll({
-
 		order: [ ['title'] ],
 		offset: ((req.params.page - 1) * pageLimit),
         limit: pageLimit
@@ -39,7 +38,7 @@ router.get('/all', function(req, res, next){
         order: ['title'],
         limit: 100
     }).then(function(book){
-        res.render('all', {content: book})
+        res.render('books/all', {content: book})
     })
 });
 

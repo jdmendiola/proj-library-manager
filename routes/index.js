@@ -13,7 +13,7 @@ router.get('/create', function(req, res, next){
 */
 
 router.get('/', function(req, res, next){
-    res.render('index');
+    res.render('home');
 });
 
 router.post('/', function(req, res, next){
