@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../../models').Book;
+var Loan = require('../../models').Loan;
+var { Op } = require('sequelize');
 
 router.get('/', function(req, res, next){
     res.redirect('/books/page/1');
@@ -36,9 +38,19 @@ router.get('/page/:page', function (req, res, next) {
 router.get('/all', function(req, res, next){
     Book.findAll({
         order: ['title'],
+        include: [
+            {
+                model: Loan,
+                where: {
+                    return_by: '2015-12-18'
+                }
+            }
+        ],
+        required: true,
         limit: 100
     }).then(function(book){
-        res.render('books/all', {content: book})
+        console.log(book);
+        res.render('books/all', {model: book})
     })
 });
 
