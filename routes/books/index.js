@@ -46,7 +46,6 @@ router.get('/all', function(req, res, next){
                 }
             }
         ],
-        required: true,
         limit: 100
     }).then(function(book){
         console.log(book);
