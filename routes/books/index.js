@@ -18,9 +18,7 @@ router.get('/page/:page', function (req, res, next) {
 		order: [ ['title'] ],
 		offset: ((req.params.page - 1) * pageLimit),
         limit: pageLimit
-        
 	}).then(function (book) {
-        
         let pages = Math.ceil(book.count / pageLimit);
 
 		res.status(200).render('index', {
@@ -28,7 +26,6 @@ router.get('/page/:page', function (req, res, next) {
 			pagination: pages,
 			title: 'Express'
 		});
-
 	}).catch(function(err){
         res.status(500).send('Critical error');
     });
@@ -36,21 +33,33 @@ router.get('/page/:page', function (req, res, next) {
 });
 
 router.get('/all', function(req, res, next){
-    Book.findAll({
-        order: ['title'],
-        include: [
-            {
-                model: Loan,
-                where: {
-                    return_by: '2015-12-18'
-                }
-            }
-        ],
-        limit: 100
-    }).then(function(book){
-        console.log(book);
-        res.render('books/all', {model: book})
-    })
+    if (req.query.filter){
+        switch(req.query.filter){
+            case 'overdue':
+                Book.findAll({
+                    order: ['title'],
+                    include: [
+                        {
+                            model: Loan,
+                            where: {
+                                return_by: '2020-10-20'
+                            }
+                        }
+                    ],
+                    limit: 100
+                }).then(function(book){
+                    res.render('books/all', {model: book})
+                })
+                break;
+        }
+    } else {
+        Book.findAll({
+            order: ['title'],
+            limit: 100
+        }).then(function(book){
+            res.render('books/all', {model: book})
+        })
+    }
 });
 
 module.exports = router;
