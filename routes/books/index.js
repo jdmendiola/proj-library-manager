@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var Book = require('../../models').Book;
-var Loan = require('../../models').Loan;
-var { Op } = require('sequelize');
+const express = require('express');
+const router = express.Router();
+const Book = require('../../models').Book;
+const Loan = require('../../models').Loan;
+const { Op } = require('sequelize');
+const dayjs = require('dayjs');
 
 router.get('/', function(req, res, next){
     res.redirect('/books/page/1');
@@ -42,14 +43,49 @@ router.get('/all', function(req, res, next){
                         {
                             model: Loan,
                             where: {
-                                return_by: '2020-10-20'
+                                [Op.and]: {
+                                    return_by: {
+                                        [Op.lt]: dayjs().format('YYYY-MM-DD'),
+                                    },
+                                    returned_on: {
+                                        [Op.eq]: null
+                                    }
+                                }
                             }
                         }
                     ],
                     limit: 100
                 }).then(function(book){
-                    res.render('books/all', {model: book})
+                    console.log(book);
+                    res.json(book)
                 })
+                break;
+            case 'checkedout':
+                Book.findAll({
+                    order: ['title'],
+                    include: [
+                        {
+                            model: Loan,
+                            where: {
+                                [Op.and]: {
+                                    return_by: {
+                                        [Op.lt]: dayjs().format('YYYY-MM-DD'),
+                                    },
+                                    returned_on: {
+                                        [Op.eq]: null
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    limit: 100
+                }).then(function(book){
+                    console.log(book);
+                    res.json(book)
+                })
+                break;
+            default:
+                res.send(`The filter 'filter=${req.query.filter}' does not exist for this page.`);
                 break;
         }
     } else {
