@@ -13,16 +13,19 @@ block content
 		||  
 		a(href='/books/all?filter=checkedout') Checked Out
 
+	form(method='POST' action='/books')
+		input(type='text' name='field')
+		input(type='text' name='field_name')
+		input(type='text' name='field_type')
+		input(type='submit' value='Submit')
+
 	include all_default
 
 	h2 Pagination
 
 	- var n = 1;
-	
 	ul
 		while n <= pagination
-			- console.log('current page', current);
-			- console.log('current iteration of pagination', n);
 			if (n == current)
 				li: a(href=`/books/all/${n}` class='active') Page #{n}
 			else

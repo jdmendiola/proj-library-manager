@@ -9,6 +9,11 @@ router.get('/', function(req, res, next){
     res.redirect('/books/all/1');
 });
 
+router.post('/', function(req, res, next){
+    console.log(req.body);
+    res.json(req.body);
+});
+
 router.get('/all', function(req, res, next){
     let today = dayjs().format('YYYY-MM-DD');
 
@@ -71,7 +76,7 @@ router.get('/all', function(req, res, next){
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 2;
+    let pageLimit = 5;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
