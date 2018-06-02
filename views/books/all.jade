@@ -9,16 +9,22 @@ block content
 		| Filters 
 		a(href='all_books.html') All 
 		||
-		a(href='overdue_books.html') Overdue 
+		a(href='/books/all?filter=overdue') Overdue 
 		||  
-		a(href='checked_books.html') Checked Out
+		a(href='/books/all?filter=checkedout') Checked Out
 
 	include all_default
 
 	h2 Pagination
 
 	- var n = 1;
+	
 	ul
 		while n <= pagination
-			li: a(href=`/books/all/${n}`) Page #{n}
+			- console.log('current page', current);
+			- console.log('current iteration of pagination', n);
+			if (n == current)
+				li: a(href=`/books/all/${n}` class='active') Page #{n}
+			else
+				li: a(href=`/books/all/${n}`) Page #{n}
 			- n++    

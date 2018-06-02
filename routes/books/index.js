@@ -34,7 +34,6 @@ router.get('/all', function(req, res, next){
                     ],
                     limit: 100
                 }).then(function(book){
-                    console.log(book);
                     res.json(book)
                 })
                 break;
@@ -58,7 +57,6 @@ router.get('/all', function(req, res, next){
                     ],
                     limit: 100
                 }).then(function(book){
-                    console.log(book);
                     res.json(book)
                 })
                 break;
@@ -67,18 +65,13 @@ router.get('/all', function(req, res, next){
                 break;
         }
     } else {
-        Book.findAll({
-            order: ['title'],
-            limit: 100
-        }).then(function(book){
-            res.render('books/all', {model: book})
-        })
+        res.redirect('/books/all/1');
     }
 });
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 4;
+    let pageLimit = 2;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
@@ -89,11 +82,16 @@ router.get('/all/:page', function (req, res, next) {
 	}).then(function (book) {
         let pages = Math.ceil(book.count / pageLimit);
 
-		res.status(200).render('books/all', {
-			model: book.rows,
-			pagination: pages,
-			title: 'Express'
-		});
+        if (pageNumber <= pages){
+            res.status(200).render('books/all', {
+                model: book.rows,
+                pagination: pages,
+                current: pageNumber
+            });
+        } else {
+            res.send('That page number does not exist.');
+        }
+		
 	}).catch(function(err){
         res.status(500).send('Critical error');
     });
