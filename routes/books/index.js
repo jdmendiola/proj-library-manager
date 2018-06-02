@@ -34,18 +34,20 @@ router.get('/page/:page', function (req, res, next) {
 });
 
 router.get('/all', function(req, res, next){
+    let today = dayjs().format('YYYY-MM-DD');
+
     if (req.query.filter){
         switch(req.query.filter){
             case 'overdue':
                 Book.findAll({
-                    order: ['title'],
+                    order: ['author','title'],
                     include: [
                         {
                             model: Loan,
                             where: {
                                 [Op.and]: {
                                     return_by: {
-                                        [Op.lt]: dayjs().format('YYYY-MM-DD'),
+                                        [Op.lt]: today,
                                     },
                                     returned_on: {
                                         [Op.eq]: null
@@ -62,14 +64,14 @@ router.get('/all', function(req, res, next){
                 break;
             case 'checkedout':
                 Book.findAll({
-                    order: ['title'],
+                    order: ['author','title'],
                     include: [
                         {
                             model: Loan,
                             where: {
                                 [Op.and]: {
-                                    return_by: {
-                                        [Op.lt]: dayjs().format('YYYY-MM-DD'),
+                                    loaned_on: {
+                                        [Op.ne]: null,
                                     },
                                     returned_on: {
                                         [Op.eq]: null
