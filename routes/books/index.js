@@ -10,8 +10,12 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-    console.log(req.body);
-    res.json(req.body);
+    if (req.body !== 'undefined'){
+        res.json(req.body);
+    } else {
+        res.send('No inputs found');
+    }
+
 });
 
 router.get('/all', function(req, res, next){
@@ -82,7 +86,7 @@ router.get('/all/:page', function (req, res, next) {
 
 	Book.findAndCountAll({
 		order: [ ['title'] ],
-		offset: ((req.params.page - 1) * pageLimit),
+		offset: pageOffset,
         limit: pageLimit
 	}).then(function (book) {
         let pages = Math.ceil(book.count / pageLimit);

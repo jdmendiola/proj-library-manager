@@ -14,9 +14,8 @@ block content
 		a(href='/books/all?filter=checkedout') Checked Out
 
 	form(method='POST' action='/books')
-		input(type='text' name='field')
-		input(type='text' name='field_name')
 		input(type='text' name='field_type')
+		input(type='text' name='field_entry')
 		input(type='submit' value='Submit')
 
 	include all_default
