@@ -11,11 +11,28 @@ router.get('/', function(req, res, next){
 
 router.post('/', function(req, res, next){
     if (req.body !== 'undefined'){
-        res.json(req.body);
+        let column = req.body.search_column;
+        let searchQuery = req.body.search_query;
+
+        Book.findAll({
+            order: ['author', 'title'],
+            where: {
+                [column]: {
+                    [Op.like]: `%${searchQuery}%`
+                }
+            }
+        }).then(function(book){
+            if (book.length > 0){
+                res.json(book);
+            } else {
+                res.send('No results found');
+            }
+        }).catch(function(err){
+            res.send('Bad query for database');
+        });
     } else {
         res.send('No inputs found');
     }
-
 });
 
 router.get('/all', function(req, res, next){
@@ -80,7 +97,7 @@ router.get('/all', function(req, res, next){
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 5;
+    let pageLimit = 100;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
