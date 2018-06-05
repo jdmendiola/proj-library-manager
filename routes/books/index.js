@@ -60,7 +60,10 @@ router.get('/all', function(req, res, next){
                     ],
                     limit: 100
                 }).then(function(book){
-                    res.json(book)
+                    res.status(200).render('books/all', {
+                        model: book,
+                        filter: true
+                    });
                 })
                 break;
             case 'checkedout':
@@ -83,7 +86,11 @@ router.get('/all', function(req, res, next){
                     ],
                     limit: 100
                 }).then(function(book){
-                    res.json(book)
+                    // res.json(book)
+                    res.status(200).render('books/all', {
+                        model: book,
+                        filter: true
+                    });                    
                 })
                 break;
             default:
@@ -97,7 +104,7 @@ router.get('/all', function(req, res, next){
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 100;
+    let pageLimit = 5;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
@@ -112,7 +119,8 @@ router.get('/all/:page', function (req, res, next) {
             res.status(200).render('books/all', {
                 model: book.rows,
                 pagination: pages,
-                current: pageNumber
+                current: pageNumber,
+                filter: false
             });
         } else {
             res.send('That page number does not exist.');

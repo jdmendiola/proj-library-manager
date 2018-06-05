@@ -13,22 +13,6 @@ block content
 		||  
 		a(href='/books/all?filter=checkedout') Checked Out
 
-	form(method='POST' action='/books')
-		select(name='search_column')
-			option(value='title') Book Title
-			option(value='author') Book Author
-		input(type='text' name='search_query')
-		input(type='submit' value='Submit')
+	include book_search
 
-	include all_default
-
-	h2 Pagination
-
-	- var n = 1;
-	ul
-		while n <= pagination
-			if (n == current)
-				li: a(href=`/books/all/${n}` class='active') Page #{n}
-			else
-				li: a(href=`/books/all/${n}`) Page #{n}
-			- n++    
+	include all_default    

@@ -14,3 +14,16 @@ table
 				td #{model[index].author}
 				td #{model[index].genre}
 				td #{model[index].first_published}
+
+if !filter
+
+	h2 Pagination
+
+	- var n = 1;
+	ul
+		while n <= pagination
+			if (n == current)
+				li: a(href=`/books/all/${n}` class='active') Page #{n}
+			else
+				li: a(href=`/books/all/${n}`) Page #{n}
+			- n++

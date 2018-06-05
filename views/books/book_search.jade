@@ -1,0 +1,6 @@
+form(method='POST' action='/books')
+		select(name='search_column')
+			option(value='title') Book Title
+			option(value='author') Book Author
+		input(type='text' name='search_query')
+		input(type='submit' value='Submit')
