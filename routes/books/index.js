@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../../models').Book;
 const Loan = require('../../models').Loan;
+const Patron = require('../../models').Patron
 const { Op } = require('sequelize');
 const dayjs = require('dayjs');
 
@@ -100,6 +101,27 @@ router.get('/all', function(req, res, next){
     } else {
         res.redirect('/books/all/1');
     }
+});
+
+router.get('/:bookId', function(req, res, next){
+    Book.findById(req.params.bookId, {
+        include: [
+            {
+                model: Loan,
+                include: [
+                    {model: Patron}
+                ]
+            }
+        ]
+    }).then(function(book){
+        if (book){
+            res.json(book);
+        } else {
+            res.send('Book ID requested does not exist.')    
+        }
+    }).catch(function(error){
+        res.send('Book ID requested does not exist.')
+    })
 });
 
 router.get('/all/:page', function (req, res, next) {
