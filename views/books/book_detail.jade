@@ -2,4 +2,22 @@ extends ../layout
 
 block content
 
-    h1 Book: #{model.title}
+	h1 Book: #{model.title}
+
+	- var publishedValue = (model.first_published != null) ? model.first_published : ''
+
+	form
+		p
+			label(for='title') Title
+			input#title(type='text', value='#{model.title}')
+		p
+			label(for='author') Author
+			input#author(type='text', value='#{model.author}')
+		p
+			label(for='genre') Genre
+			input#genre(type='text', value='#{model.genre}')
+		p
+			label(for='first_published') First Published
+			input#first_published(type='text', value='#{publishedValue}')
+		p
+			input(type='submit', value='Update')
