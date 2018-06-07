@@ -1,3 +1,4 @@
 /node_modules
 /library-manager-v1
 .vscode
+/.vs
