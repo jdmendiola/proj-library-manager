@@ -115,12 +115,14 @@ router.get('/:bookId', function(req, res, next){
         ]
     }).then(function(book){
         if (book){
+            let loaned = (book.Loans.length) ? true : false;
+            console.log('loaned', loaned);
             res.json(book);
         } else {
             res.send('Book ID requested does not exist.')    
         }
     }).catch(function(error){
-        res.send('Book ID requested does not exist.')
+        res.send('Bad request')
     })
 });
 
