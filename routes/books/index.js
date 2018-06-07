@@ -116,8 +116,7 @@ router.get('/:bookId', function(req, res, next){
     }).then(function(book){
         if (book){
             let loaned = (book.Loans.length) ? true : false;
-            console.log('loaned', loaned);
-            res.json(book);
+            res.render('books/book_detail', {model: book, isLoaned: loaned})
         } else {
             res.send('Book ID requested does not exist.')    
         }
