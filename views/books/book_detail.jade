@@ -6,19 +6,19 @@ block content
 
 	- var publishedValue = (model.first_published != null) ? model.first_published : ''
 
-	form
+	form(action='/books/' + model.id + '?_method=PUT' method='post')
 		p
 			label(for='title') Title
-			input#title(type='text', value='#{model.title}')
+			input#title(type='text', value='#{model.title}' name='title')
 		p
 			label(for='author') Author
-			input#author(type='text', value='#{model.author}')
+			input#author(type='text', value='#{model.author}' name='author')
 		p
 			label(for='genre') Genre
-			input#genre(type='text', value='#{model.genre}')
+			input#genre(type='text', value='#{model.genre}' name='genre')
 		p
 			label(for='first_published') First Published
-			input#first_published(type='text', value='#{publishedValue}')
+			input#first_published(type='text', value='#{publishedValue}' name='first_published')
 		p
 			input(type='submit', value='Update')
 

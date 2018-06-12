@@ -125,6 +125,18 @@ router.get('/:bookId', function(req, res, next){
     })
 });
 
+router.put('/:bookId', function(req, res, next){
+    Book.findById(req.params.bookId).then(function(book){
+        if (book){
+            return book.update(req.body)
+        } else {
+            res.send(404);
+        }
+    }).then(function(book){
+        res.redirect('/books/' + book.id)
+    });
+});
+
 router.get('/all/:page', function (req, res, next) {
 
     let pageLimit = 5;
