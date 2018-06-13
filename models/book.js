@@ -8,7 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     author: DataTypes.STRING,
     genre: DataTypes.STRING,
-    first_published: DataTypes.INTEGER
+    first_published: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmtpy: {
+          msg: "not an integer"
+        }
+      }
+    }
   }, {
       timestamps: false,
       underscored: true

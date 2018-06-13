@@ -133,7 +133,11 @@ router.put('/:bookId', function(req, res, next){
             res.send(404);
         }
     }).then(function(book){
-        res.redirect('/books/' + book.id)
+        res.redirect('/books/all')
+    }).catch(function(error){
+        if (error.name === 'SequelizeValidationError'){
+            console.log(error.errors[0].message);
+        }
     });
 });
 
