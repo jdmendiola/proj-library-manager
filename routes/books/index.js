@@ -6,7 +6,7 @@ const Patron = require('../../models').Patron
 const { Op } = require('sequelize');
 const dayjs = require('dayjs');
 
-router.get('/', function(req, res, next){
+router.get('/', function (req, res, next) {
     res.redirect('/books/all/1');
 });
 
@@ -136,7 +136,9 @@ router.put('/:bookId', function(req, res, next){
         res.redirect('/books/all')
     }).catch(function(error){
         if (error.name === 'SequelizeValidationError'){
-            console.log(error.errors[0].message);
+            var book = Book.build(req.body);
+            book.id = req.params.bookId;
+            res.render('books/book_detail', {model: book, errors: error.errors});
         }
     });
 });

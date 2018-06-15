@@ -4,18 +4,34 @@ block content
 
 	h1 Book: #{model.title}
 
-	- var publishedValue = (model.first_published != null) ? model.first_published : ''
+	-
+		var formErrors
+		var publishedValue = (model.first_published != null) ? model.first_published : ''
+
+	-
+		if (errors){
+			//- formErrors = errors.map(function(error){
+			//- 	return error.message;
+			//- })
+			console.log('errrorrrsssss =====================', errors);
+		}
 
 	form(action='/books/' + model.id + '?_method=PUT' method='post')
 		p
 			label(for='title') Title
 			input#title(type='text', value='#{model.title}' name='title')
+			if errors
+				span= formErrors[0]
 		p
 			label(for='author') Author
 			input#author(type='text', value='#{model.author}' name='author')
+			if errors
+				span= formErrors[1]
 		p
 			label(for='genre') Genre
 			input#genre(type='text', value='#{model.genre}' name='genre')
+			if errors
+				span= formErrors[2]
 		p
 			label(for='first_published') First Published
 			input#first_published(type='text', value='#{publishedValue}' name='first_published')
