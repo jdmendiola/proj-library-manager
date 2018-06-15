@@ -128,6 +128,14 @@ router.get('/:bookId', function(req, res, next){
 router.put('/:bookId', function(req, res, next){
     Book.findById(req.params.bookId).then(function(book){
         if (book){
+            req.body.id = req.params.bookId;
+            console.log('REQ BODY =====================', req.body);
+            console.log('BOOK =====================', book.dataValues);
+            if (req.body === book.dataValues){
+                console.log('same object!!!');
+            } else {
+                console.log('not same object');
+            }
             return book.update(req.body)
         } else {
             res.send(404);
