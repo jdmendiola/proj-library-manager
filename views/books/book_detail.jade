@@ -4,15 +4,18 @@ block content
 
 	h1 Book: #{model.title}
 
+	if noChange
+		h4 Error updating book. No changes made.
+
 	-
 		var formErrors
 		var publishedValue = (model.first_published != null) ? model.first_published : ''
 
 	-
 		if (errors){
-			//- formErrors = errors.map(function(error){
-			//- 	return error.message;
-			//- })
+			formErrors = errors.map(function(error){
+				return error.message;
+			})
 			console.log('errrorrrsssss =====================', errors);
 		}
 

@@ -128,15 +128,17 @@ router.get('/:bookId', function(req, res, next){
 router.put('/:bookId', function(req, res, next){
     Book.findById(req.params.bookId).then(function(book){
         if (book){
+
             req.body.id = req.params.bookId;
-            console.log('REQ BODY =====================', req.body);
-            console.log('BOOK =====================', book.dataValues);
-            if (req.body === book.dataValues){
-                console.log('same object!!!');
+            req.body.first_published = convertInteger(req.body.first_published);
+            req.body.id = convertInteger(req.body.id);
+
+            if (isEqualModels(req.body, book.dataValues)){
+                res.render('books/book_detail', {model: book, noChange: true})
             } else {
-                console.log('not same object');
+                return book.update(req.body)
             }
-            return book.update(req.body)
+            
         } else {
             res.send(404);
         }
@@ -180,5 +182,20 @@ router.get('/all/:page', function (req, res, next) {
     });
 
 });
+
+function isEqualModels(model1, model2){
+    var keys = Object.keys(model1);
+    var equalCheck = keys.every(function(key){
+        return model1[key] === model2[key];
+    });
+
+    console.log(equalCheck);
+    return equalCheck;
+}
+
+function convertInteger(property){
+    var intProp = parseInt(property);
+    return intProp;
+}
 
 module.exports = router;
