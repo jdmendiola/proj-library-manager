@@ -126,7 +126,17 @@ router.get('/:bookId', function(req, res, next){
 });
 
 router.put('/:bookId', function(req, res, next){
-    Book.findById(req.params.bookId).then(function(book){
+    Book.findById(req.params.bookId, {
+        include: [
+            {
+                model: Loan,
+                include: [
+                    {model: Patron}
+                ]
+            }
+        ]
+    }).then(function(book){
+
         if (book){
 
             req.body.id = req.params.bookId;
@@ -134,7 +144,8 @@ router.put('/:bookId', function(req, res, next){
             req.body.id = convertInteger(req.body.id);
 
             if (isEqualModels(req.body, book.dataValues)){
-                res.render('books/book_detail', {model: book, noChange: true})
+                let loaned = (book.Loans.length) ? true : false;
+                res.render('books/book_detail', {model: book, noChange: true, isLoaned: loaned})
             } else {
                 return book.update(req.body)
             }
@@ -142,13 +153,15 @@ router.put('/:bookId', function(req, res, next){
         } else {
             res.send(404);
         }
+
     }).then(function(book){
         res.redirect('/books/all')
     }).catch(function(error){
         if (error.name === 'SequelizeValidationError'){
-            var book = Book.build(req.body);
-            book.id = req.params.bookId;
-            res.render('books/book_detail', {model: book, errors: error.errors});
+            // var book = Book.build(req.body);
+            // book.id = req.params.bookId;
+            // res.render('books/book_detail', {model: book, errors: error.errors});
+            res.json(error);
         }
     });
 });
