@@ -54,16 +54,22 @@ block content
 					th Returned on
 					th Action
 			tbody
-				tr
-					td
-						a(href='book_detail.html') A Brief History of Time
-					td
-						a(href='patron_detail.html') Andrew Chalkley
-					td 2015-12-12
-					td 2015-12-19
-					td
-					td
-						a.button(href='return_book.html') Return Book
+				each val, index in model.Loans
+					tr
+						td
+							a(href=`/books/${model.id}`) #{model.title}
+						td
+							a(href=`/patron/${model.Loans[index].Patron.id}`) #{`${model.Loans[index].Patron.first_name} ${model.Loans[index].Patron.last_name}`}
+						td #{model.Loans[index].loaned_on}
+						td #{model.Loans[index].return_by}
+						td
+						td
+							a.button(href='return_book.html') Return Book
+
+		-
+			console.log(JSON.stringify(model.Loans[0].Patron));
 	else
 
-		h2 Book is not loaned!
+		h2 Loan History
+
+		p #{`${model.title} has no loan history.`}

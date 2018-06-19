@@ -189,7 +189,6 @@ function isEqualModels(model1, model2){
         return model1[key] === model2[key];
     });
 
-    console.log(equalCheck);
     return equalCheck;
 }
 
