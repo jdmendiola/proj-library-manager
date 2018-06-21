@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         title: {
             type: DataTypes.STRING,
-            validate: { notEmpty: { msg: 'Title field cannot be blank' } }
+            validate: { notEmpty: { msg: 'You have submitted a blank entry. Title field cannot be blank' } }
         },
         author: {
             type: DataTypes.STRING,
-            validate: { notEmpty: { msg: 'Author field cannot be blank' } }
+            validate: { notEmpty: { msg: 'You have submitted a blank entry. Author field cannot be blank' } }
         },
         genre: {
             type: DataTypes.STRING,
-            validate: { notEmpty: { msg: 'Genre field cannot be blank' } }
+            validate: { notEmpty: { msg: 'You have submitted a blank entry. Genre field cannot be blank' } }
         },
         first_published: DataTypes.INTEGER
     }, {

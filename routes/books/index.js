@@ -158,10 +158,19 @@ router.put('/:bookId', function(req, res, next){
         res.redirect('/books/all')
     }).catch(function(error){
         if (error.name === 'SequelizeValidationError'){
-            // var book = Book.build(req.body);
-            // book.id = req.params.bookId;
-            // res.render('books/book_detail', {model: book, errors: error.errors});
-            res.json(error);
+            Book.findById(req.params.bookId, {
+                include: [
+                    {
+                        model: Loan,
+                        include: [
+                            {model: Patron}
+                        ]
+                    }
+                ]
+            }).then(function(book){
+                let loaned = (book.Loans.length) ? true : false;
+                res.render('books/book_detail', {model: book, errors: error.errors, isLoaned: loaned});
+            });
         }
     });
 });
