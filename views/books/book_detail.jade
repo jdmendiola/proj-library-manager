@@ -15,7 +15,11 @@ block content
 		if (errors){
 			formErrors = errors.map(function(error){
 				return error.message;
-			})
+			});
+
+			var titleError = formErrors.find(function(fieldError){
+				return fieldError.includes('Title');
+			});
 		}
 
 	form(action='/books/' + model.id + '?_method=PUT' method='post')
@@ -23,7 +27,7 @@ block content
 			label(for='title') Title
 			input#title(type='text', value='#{model.title}' name='title')
 			if errors
-				span= formErrors[0]
+				span= titleError
 		p
 			label(for='author') Author
 			input#author(type='text', value='#{model.author}' name='author')
