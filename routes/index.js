@@ -4,14 +4,6 @@ var Book = require('../models').Book;
 var Loan = require('../models').Loan;
 var Patron = require('../models').Patron;
 
-/*
-router.get('/create', function(req, res, next){
-	res.render('create', {content: {}, title: "Create"});
-});
-
-
-*/
-
 router.get('/', function(req, res, next){
     res.render('home');
 });
