@@ -151,11 +151,15 @@ router.put('/:bookId', function(req, res, next){
         ]
     }).then(function(book){
         if (book){
-            return book.update(req.body)
+            if (!isEqualModels(book.dataValues, req.body)){
+                return book.update(req.body)
+            } else {
+                let loaned = (book.Loans.length) ? true : false;
+                res.render('books/book_detail', {model: book, noChange: true, isLoaned: loaned})
+            }
         } else {
             res.send(404);
         }
-
     }).then(function(book){
         res.redirect('/books/all')
     }).catch(function(error){
@@ -208,12 +212,16 @@ router.get('/all/:page', function (req, res, next) {
 });
 
 function isEqualModels(model1, model2){
-    var keys = Object.keys(model1);
-    var equalCheck = keys.every(function(key){
-        return model1[key] === model2[key];
-    });
 
-    return equalCheck;
+    if (model2.first_published != ''){
+        model2.first_published = convertInteger(model2.first_published);
+    }
+    
+    return model1.title == model2.title 
+    && model1.author == model2.author 
+    && model1.genre == model2.genre
+    && model1.first_published == model2.first_published
+
 }
 
 function convertInteger(property){
