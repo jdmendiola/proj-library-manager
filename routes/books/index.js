@@ -87,7 +87,6 @@ router.get('/all', function(req, res, next){
                     ],
                     limit: 100
                 }).then(function(book){
-                    // res.json(book)
                     res.status(200).render('books/all', {
                         model: book,
                         filter: true
@@ -101,6 +100,15 @@ router.get('/all', function(req, res, next){
     } else {
         res.redirect('/books/all/1');
     }
+});
+
+router.post('/create', function(req, res, next){
+    console.log(req.body);
+    res.json(req.body);
+})
+
+router.get('/create', function(req, res, next){
+    res.render('books/book_create', {model: {}})
 });
 
 router.get('/:bookId', function(req, res, next){
