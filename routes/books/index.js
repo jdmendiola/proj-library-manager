@@ -103,8 +103,14 @@ router.get('/all', function(req, res, next){
 });
 
 router.post('/create', function(req, res, next){
-    console.log(req.body);
-    res.json(req.body);
+    Book.create(req.body).then(function(book){
+        res.redirect('/books/all/1');
+    }).catch(function(error){
+        if (error.name === 'SequelizeValidationError'){
+            res.json(error);
+            // res.render('books/book_create', {errors: error.errors});
+        }
+    });
 })
 
 router.get('/create', function(req, res, next){
@@ -144,20 +150,8 @@ router.put('/:bookId', function(req, res, next){
             }
         ]
     }).then(function(book){
-
         if (book){
-
-            req.body.id = req.params.bookId;
-            req.body.first_published = convertInteger(req.body.first_published);
-            req.body.id = convertInteger(req.body.id);
-
-            if (isEqualModels(req.body, book.dataValues)){
-                let loaned = (book.Loans.length) ? true : false;
-                res.render('books/book_detail', {model: book, noChange: true, isLoaned: loaned})
-            } else {
-                return book.update(req.body)
-            }
-            
+            return book.update(req.body)
         } else {
             res.send(404);
         }

@@ -2,19 +2,47 @@ extends ../layout
 
 block content
 
+	-
+		var formErrors;
+		if (errors){
+			formErrors = errors.map(function(error){
+				return error.message;
+			});
+
+			var titleError = formErrors.find(function(fieldError){
+				return fieldError.includes('Title');
+			});
+
+			var authorError = formErrors.find(function(fieldError){
+				return fieldError.includes('Author');
+			});
+
+			var genreError = formErrors.find(function(fieldError){
+				return fieldError.includes('Genre');
+			});
+		}
+
+
 	h1 New Book
-	form(action='/books/create' method='post')
-		p
+
+	form(method='POST' action='/books/create' class='form-update')
+		p.field
 			label(for='title') Title
-			input#title(type='text')
-		p
+			input#title(type='text' name='title')
+			if titleError
+				span= titleError
+		p.field
 			label(for='author') Author
-			input#author(type='text')
-		p
+			input#author(type='text' name='author')
+			if authorError
+				span= authorError
+		p.field
 			label(for='genre') Genre
-			input#genre(type='text')
+			input#genre(type='text' name='genre')
+			if genreError
+				span= genreError
 		p
 			label(for='first_published') First Published
-			input#first_published(type='text')
+			input#first_published(type='text' name='first_published')
 		p
 			input(type='submit', value='Create New Book')
