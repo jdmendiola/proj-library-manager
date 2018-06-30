@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+
+	h1 List of Loans
+
+	ol
+		each val, index in model
+			li #{model[index].Book.title} - #{model[index].Patron.changeUpper()} #{model[index].Patron.last_name} - #{model[index].loaned_on} - #{model[index].return_by} - #{model[index].returned_on}
