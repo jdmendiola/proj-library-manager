@@ -107,8 +107,7 @@ router.post('/create', function(req, res, next){
         res.redirect('/books/all/1');
     }).catch(function(error){
         if (error.name === 'SequelizeValidationError'){
-            res.json(error);
-            // res.render('books/book_create', {errors: error.errors});
+            res.render('books/book_create', {errors: error.errors});
         }
     });
 })
