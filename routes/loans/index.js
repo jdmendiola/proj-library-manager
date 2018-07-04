@@ -29,8 +29,11 @@ router.get('/all', function(req, res, next){
                         }
                     }
                 }).then(function(loan){
-                    res.json(loan);
+                    res.render('loans/all', {model: loan})
                 });
+                break;
+            default:
+                res.send('That filter does not exist');
                 break;
         }
     } else {
