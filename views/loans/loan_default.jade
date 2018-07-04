@@ -1,46 +1,27 @@
-extends ../layout
-
-block content
-
-	h1 List of Loans
-
-	ol
+table
+	thead
+		tr
+			th Book
+			|                 
+			th Patron 
+			|                 
+			th Loaned on
+			|                 
+			th Return by 
+			|                 
+			th Returned on
+			|                 
+			th Action
+			|         
+		tbody
 		each val, index in model
-			li #{model[index].Book.title} - #{model[index].Patron.changeUpper()} #{model[index].Patron.last_name} - #{model[index].loaned_on} - #{model[index].return_by} - #{model[index].returned_on}
-
-	table
-		thead
-			tr
-				th Book
-				|                 
-				th Patron 
-				|                 
-				th Loaned on
-				|                 
-				th Return by 
-				|                 
-				th Returned on
-				|                 
-				th Action
-				|         
-			tbody
 			tr
 				td
-					a(href='book_detail.html') Emma
+					a(href='book_detail.html') #{model[index].Book.title} 
 				td
-					a(href='patron_detail.html') Dave McFarland
-				td 2015-12-10
-				td 2020-10-20
-				td 
+					a(href='patron_detail.html') #{model[index].Patron.first_name} #{model[index].Patron.last_name}
+				td #{model[index].loaned_on}
+				td #{model[index].return_by}
+				td #{model[index].returned_on}
 				td 
 					a.button(href='return_book.html') Return Book
-			tr
-				td
-					a(href='book_detail.html') Emma
-				td
-					a(href='patron_detail.html') Dave McFarland
-				td 2015-12-10
-				td 2020-10-20
-				td 
-				td 
-					a.button(href='return_book.html') Return Book					

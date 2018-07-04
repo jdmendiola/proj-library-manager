@@ -12,7 +12,7 @@ router.get('/all', function(req, res, next){
             {model: Book}
         ]    
     }).then(function(loan){
-        res.render('loans/loan_default', {model: loan})
+        res.render('loans/all', {model: loan})
     });
 });
 
