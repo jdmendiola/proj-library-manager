@@ -7,3 +7,40 @@ block content
 	ol
 		each val, index in model
 			li #{model[index].Book.title} - #{model[index].Patron.changeUpper()} #{model[index].Patron.last_name} - #{model[index].loaned_on} - #{model[index].return_by} - #{model[index].returned_on}
+
+	table
+		thead
+			tr
+				th Book
+				|                 
+				th Patron 
+				|                 
+				th Loaned on
+				|                 
+				th Return by 
+				|                 
+				th Returned on
+				|                 
+				th Action
+				|         
+			tbody
+			tr
+				td
+					a(href='book_detail.html') Emma
+				td
+					a(href='patron_detail.html') Dave McFarland
+				td 2015-12-10
+				td 2020-10-20
+				td 
+				td 
+					a.button(href='return_book.html') Return Book
+			tr
+				td
+					a(href='book_detail.html') Emma
+				td
+					a(href='patron_detail.html') Dave McFarland
+				td 2015-12-10
+				td 2020-10-20
+				td 
+				td 
+					a.button(href='return_book.html') Return Book					
