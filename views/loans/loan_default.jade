@@ -17,7 +17,7 @@ table
 		each val, index in model
 			tr
 				td
-					a(href='book_detail.html') #{model[index].Book.title} 
+					a(href='/books/#{model[index].Book.id}') #{model[index].Book.title} 
 				td
 					a(href='patron_detail.html') #{model[index].Patron.first_name} #{model[index].Patron.last_name}
 				td #{model[index].loaned_on}
