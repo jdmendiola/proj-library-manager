@@ -32,6 +32,27 @@ router.get('/all', function(req, res, next){
                     res.render('loans/all', {model: loan})
                 });
                 break;
+            case 'checkedout':
+                Loan.findAll({
+                    order: ['id'],
+                    include: [
+                        {model: Patron},
+                        {model: Book}
+                    ],
+                    where: {
+                        [Op.and]: {
+                            loaned_on: {
+                                [Op.ne]: null,
+                            },
+                            returned_on: {
+                                [Op.eq]: null
+                            }
+                        }
+                    }
+                }).then(function(loan){
+                    res.render('loans/all', {model: loan})
+                });
+                break;
             default:
                 res.send('That filter does not exist');
                 break;
