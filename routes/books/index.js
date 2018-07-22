@@ -24,7 +24,10 @@ router.post('/', function(req, res, next){
             }
         }).then(function(book){
             if (book.length > 0){
-                res.json(book);
+                res.status(200).render('books/all', {
+                    model: book,
+                    filter: true
+                });
             } else {
                 res.send('No results found');
             }
@@ -160,7 +163,7 @@ router.put('/:bookId', function(req, res, next){
             res.send(404);
         }
     }).then(function(book){
-        res.redirect('/books/all')
+        res.redirect('/books/all');
     }).catch(function(error){
         if (error.name === 'SequelizeValidationError'){
             Book.findById(req.params.bookId, {
