@@ -71,7 +71,18 @@ router.get('/all', function(req, res, next){
 });
 
 router.get('/create', function(req, res, next){
-    res.render('loans/loan_create', {model: {}})
+    let viewModel = {};
+
+    Book.findAll({
+        order: ['id'],
+        attributes: ['title']
+    }).then(function(book){
+        viewModel.bookList = book;
+        return viewModel
+    }).then(function(viewModel){
+        res.render('loans/loan_create', {model: viewModel})
+    });
+    
 });
 
 module.exports = router;
