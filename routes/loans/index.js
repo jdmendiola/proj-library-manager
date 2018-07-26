@@ -70,4 +70,8 @@ router.get('/all', function(req, res, next){
     }
 });
 
+router.get('/create', function(req, res, next){
+    res.render('loans/loan_create', {model: {}})
+});
+
 module.exports = router;

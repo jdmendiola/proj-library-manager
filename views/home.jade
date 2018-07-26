@@ -27,10 +27,10 @@ block content
 			| Loans
 			ul
 				li
-					a(href='new_loan.html') New Loan
+					a(href='/loans/create') New Loan
 				li
-					a(href='all_loans.html') List All
+					a(href='/loans/all') List All
 				li
-					a(href='overdue_loans.html') List Overdue
+					a(href='/loans/all?filter=overdue') List Overdue
 				li
-					a(href='checked_loans.html') List Checked Out
+					a(href='/loans/all?filter=checkedout') List Checked Out
