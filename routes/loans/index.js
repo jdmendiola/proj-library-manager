@@ -74,13 +74,13 @@ router.get('/create', function(req, res, next){
     let viewModel = {};
 
     Book.findAll({
-        order: ['id'],
-        attributes: ['title']
+        order: ['id']
     }).then(function(book){
         viewModel.bookList = book;
         return viewModel
     }).then(function(viewModel){
         res.render('loans/loan_create', {model: viewModel})
+        //res.json(viewModel.bookList[0].title);
     });
     
 });

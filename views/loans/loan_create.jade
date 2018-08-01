@@ -9,7 +9,7 @@ block content
 			label(for='book_id') Book
 			select#book_id
 
-				each val, index in model
+				each val, index in model.bookList
 					option(value='1') #{model.bookList[index].title}
 
 		p
