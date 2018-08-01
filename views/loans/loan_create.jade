@@ -10,20 +10,20 @@ block content
 			select#book_id
 
 				each val, index in model.bookList
-					option(value='1') #{model.bookList[index].title}
+					option(value='#{model.bookList[index].id}') #{model.bookList[index].title}
 
 		p
 			label(for='patron_id') Patron
 			select#patron_id
-				option(value='1') Andrew Chalkley
-				option(value='2') Dave McFarland
-				option(value='3') Alena Holligan
-				option(value='4') Michael Poley
+
+				each val, index in model.patronList
+					option(value='#{model.patronList[index].id}') #{`${model.patronList[index].first_name} ${model.patronList[index].last_name}`}
+
 		p
 			label(for='loaned_on') Loaned on:
-			input#loaned_on(type='text', value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
+			input#loaned_on(type='text', value='#{model.presentLoanDate}')
 		p
 			label(for='return_by') Return by:
-			input#return_by(type='text', value='Sun May 29 2016 17:00:00 GMT-0700 (PDT)')
+			input#return_by(type='text', value='#{model.returnLoanDate}')
 		p
 			input(type='submit', value='Create New Loan')

@@ -71,16 +71,30 @@ router.get('/all', function(req, res, next){
 });
 
 router.get('/create', function(req, res, next){
+    
     let viewModel = {};
+    let presentLoanDate = dayjs().format('YYYY-MM-DD');
+    let returnLoanDate = dayjs(presentLoanDate).add(7, 'day').format('YYYY-MM-DD');
+    
+    viewModel.presentLoanDate = presentLoanDate;
+    viewModel.returnLoanDate = returnLoanDate;
 
     Book.findAll({
-        order: ['id']
+        order: ['id'],
+        attributes: ['id','title']
     }).then(function(book){
         viewModel.bookList = book;
         return viewModel
     }).then(function(viewModel){
-        res.render('loans/loan_create', {model: viewModel})
-        //res.json(viewModel.bookList[0].title);
+        Patron.findAll({
+            order: ['id'],
+            attributes: ['id','first_name','last_name']
+        }).then(function(patron){
+            viewModel.patronList = patron;
+            return viewModel  
+        }).then(function(viewModel){
+            res.render('loans/loan_create', {model: viewModel})
+        });
     });
     
 });
