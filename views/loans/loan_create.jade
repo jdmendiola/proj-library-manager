@@ -11,19 +11,19 @@ block content
 			});
 
 			var bookIdError = formErrors.find(function(fieldError){
-				return fieldError.includes('Book ID');
+				return fieldError.includes('Book');
 			});
 
 			var patronIdError = formErrors.find(function(fieldError){
-				return fieldError.includes('Patron ID');
+				return fieldError.includes('Patron');
 			});
 
 			var loanedOnError = formErrors.find(function(fieldError){
-				return fieldError.includes('Loaned on');
+				return fieldError.includes('Loaned');
 			});
 
 			var returnByError = formErrors.find(function(fieldError){
-				return fieldError.includes('Return by');
+				return fieldError.includes('Return');
 			});
 
 		}
