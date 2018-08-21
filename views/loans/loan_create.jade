@@ -2,27 +2,53 @@ extends ../layout
 
 block content
 
+	-
+		var formErrors;
+		if (errors){
+
+			formErrors = errors.map(function(error){
+				return error.message;
+			});
+
+			var bookIdError = formErrors.find(function(fieldError){
+				return fieldError.includes('Book ID');
+			});
+
+			var patronIdError = formErrors.find(function(fieldError){
+				return fieldError.includes('Patron ID');
+			});
+
+			var loanedOnError = formErrors.find(function(fieldError){
+				return fieldError.includes('Loaned on');
+			});
+
+			var returnByError = formErrors.find(function(fieldError){
+				return fieldError.includes('Return by');
+			});
+
+		}
+
 	h1 New Loan
 
-	form
-		p
+	form(method='POST' action='/loans/create' class='form-update')
+		p.field
 			label(for='book_id') Book
 			select#book_id
 
 				each val, index in model.bookList
 					option(value='#{model.bookList[index].id}') #{model.bookList[index].title}
 
-		p
+		p.field
 			label(for='patron_id') Patron
 			select#patron_id
 
 				each val, index in model.patronList
 					option(value='#{model.patronList[index].id}') #{`${model.patronList[index].first_name} ${model.patronList[index].last_name}`}
 
-		p
+		p.field
 			label(for='loaned_on') Loaned on:
 			input#loaned_on(type='text', value='#{model.presentLoanDate}')
-		p
+		p.field
 			label(for='return_by') Return by:
 			input#return_by(type='text', value='#{model.returnLoanDate}')
 		p

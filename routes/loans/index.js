@@ -70,6 +70,16 @@ router.get('/all', function(req, res, next){
     }
 });
 
+router.post('/create', function(req, res, next){
+    Loan.create(req.body).then(function(loan){
+        res.redirect('/loans/all');
+    }).catch(function(error){
+        if (error.name === 'SequelizeValidationError'){
+            res.render('loans/loan_create', {errors: error.errors});
+        }
+    });
+});
+
 router.get('/create', function(req, res, next){
     
     let viewModel = {};

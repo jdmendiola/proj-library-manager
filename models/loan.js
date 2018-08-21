@@ -3,12 +3,25 @@ module.exports = (sequelize, DataTypes) => {
   var Loan = sequelize.define('Loan', {
     id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
-    book_id: DataTypes.INTEGER,
-    patron_id: DataTypes.INTEGER,
-    loaned_on: DataTypes.DATE,
-    return_by: DataTypes.DATEONLY,
+    book_id: {
+      type: DataTypes.INTEGER,
+      validate: { notEmpty: { msg: 'You have submitted a blank entry. Book ID cannot be blank.'} }
+    }, 
+    patron_id: {
+      type: DataTypes.INTEGER,
+      validate: { notEmpty: { msg: 'You have sumbumitted a blank entry. Patron ID cannot be blank.'}}
+    },
+    loaned_on: {
+      type: DataTypes.DATE,
+      validate: { notEmpty: {msg: 'You have submitted a blank entry. Loaned on date cannot be blank. '}}
+    },
+    return_by: {
+      type: DataTypes.DATEONLY,
+      validate: { notEmpty: {msg: 'You have submitted a blank entry. Return by date cannot be blank. '}}
+    },
     returned_on: DataTypes.DATE
   }, {
       timestamps: false,
