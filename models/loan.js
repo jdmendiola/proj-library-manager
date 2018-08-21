@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: { notEmpty: { msg: 'You have sumbumitted a blank entry. Patron ID cannot be blank.'}}
     },
     loaned_on: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: { notEmpty: {msg: 'You have submitted a blank entry. Loaned on date cannot be blank. '}}
     },
     return_by: {

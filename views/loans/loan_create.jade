@@ -33,23 +33,30 @@ block content
 	form(method='POST' action='/loans/create' class='form-update')
 		p.field
 			label(for='book_id') Book
-			select#book_id
+			select(id='book_id' name='book_id')
 
 				each val, index in model.bookList
 					option(value='#{model.bookList[index].id}') #{model.bookList[index].title}
+			if bookIdError
+				span= bookIdError
 
 		p.field
 			label(for='patron_id') Patron
-			select#patron_id
+			select(id='patron_id' name='patron_id')
 
 				each val, index in model.patronList
 					option(value='#{model.patronList[index].id}') #{`${model.patronList[index].first_name} ${model.patronList[index].last_name}`}
-
+			if patronIdError
+				span= patronIdError
 		p.field
 			label(for='loaned_on') Loaned on:
-			input#loaned_on(type='text', value='#{model.presentLoanDate}')
+			input#loaned_on(type='text', value='#{model.presentLoanDate}' name='loaned_on')
+			if loanedOnError
+				span= loanedOnError
 		p.field
 			label(for='return_by') Return by:
-			input#return_by(type='text', value='#{model.returnLoanDate}')
+			input#return_by(type='text', value='#{model.returnLoanDate}' name='return_by')
+			if returnByError
+				span= returnByError
 		p
 			input(type='submit', value='Create New Loan')
