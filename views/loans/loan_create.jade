@@ -4,9 +4,9 @@ block content
 
 	-
 		var formErrors;
-		if (errors){
+		if (model.errors){
 
-			formErrors = errors.map(function(error){
+			formErrors = model.errors.map(function(error){
 				return error.message;
 			});
 
