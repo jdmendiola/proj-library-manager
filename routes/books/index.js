@@ -17,7 +17,7 @@ router.post('/', function(req, res, next){
         let searchQuery = req.body.search_query;
 
         Book.findAll({
-            order: ['author', 'title'],
+            order: ['author', 'title', 'genre'],
             where: {
                 [column]: {
                     [Op.like]: `%${searchQuery}%`
