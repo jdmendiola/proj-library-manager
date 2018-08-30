@@ -16,7 +16,7 @@ table
 		tbody
 		each val, index in model
 			tr
-				- console.log(model);
+
 				td
 					a(href='/books/#{model[index].Book.id}') #{model[index].Book.title} 
 				td
