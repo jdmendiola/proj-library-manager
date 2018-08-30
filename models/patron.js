@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   };
 
-  Patron.prototype.changeUpper = function (){
-    return this.first_name.toUpperCase();
-  }
+  // Patron.prototype.changeUpper = function (){
+  //   return this.first_name.toUpperCase();
+  // }
 
   return Patron;
 };

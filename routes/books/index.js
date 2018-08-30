@@ -5,6 +5,7 @@ const Loan = require('../../models').Loan;
 const Patron = require('../../models').Patron
 const { Op } = require('sequelize');
 const dayjs = require('dayjs');
+let isEqualModels = require('../../helpers/isEqualModels').isEqualModels;
 
 router.get('/', function (req, res, next) {
     res.redirect('/books/all/1');
@@ -212,23 +213,5 @@ router.get('/all/:page', function (req, res, next) {
     });
 
 });
-
-function isEqualModels(model1, model2){
-
-    if (model2.first_published != ''){
-        model2.first_published = convertInteger(model2.first_published);
-    }
-    
-    return model1.title == model2.title 
-    && model1.author == model2.author 
-    && model1.genre == model2.genre
-    && model1.first_published == model2.first_published
-
-}
-
-function convertInteger(property){
-    var intProp = parseInt(property);
-    return intProp;
-}
 
 module.exports = router;
