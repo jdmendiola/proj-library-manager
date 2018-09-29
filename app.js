@@ -8,6 +8,7 @@ var methodOverride = require('method-override');
 var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/books');
 var loanRouter = require('./routes/loans');
+var patronRouter = require('./routes/patrons');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
 app.use('/loans', loanRouter);
+app.use('/patrons', patronRouter);
 
 function ignoreFavicon(req, res, next) {
     if (req.originalUrl === '/favicon.ico') {
