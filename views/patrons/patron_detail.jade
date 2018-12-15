@@ -4,7 +4,7 @@ block content
 
 	h1 Patron: #{model.first_name} #{model.last_name}
 
-	form
+	form(action='/patrons/' + model.id + '?_method=PUT' method='post' class='form-update')
 		p
 			label(for='first_name') First Name
 			input#first_name(type='text', value='Andrew')
