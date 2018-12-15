@@ -8,13 +8,24 @@ table
 			th Zip
 	tbody
 
-		- console.log(model)
-
 		each val, index in model
 			tr
 				td
-					a(href='patron_detail.html') #{model[index].first_name}
+					a(href=`/patrons/${model[index].id}`) #{model[index].first_name} #{model[index].last_name}
 				td #{model[index].address}
 				td #{model[index].email}
 				td #{model[index].library_id}
 				td #{model[index].zip_code}
+
+if !filter
+
+	h2 Pagination
+
+	- var n = 1;
+	ul
+		while n <= pagination
+			if (n == current)
+				li: a(href=`/patrons/all/${n}` class='active') Page #{n}
+			else
+				li: a(href=`/patrons/all/${n}`) Page #{n}
+			- n++
