@@ -16,7 +16,7 @@ router.get('/all', function(req, res, next){
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 1;
+    let pageLimit = 10;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
