@@ -16,7 +16,7 @@ router.get('/all', function(req, res, next){
 
 router.get('/all/:page', function (req, res, next) {
 
-    let pageLimit = 1;
+    let pageLimit = 2;
     let pageNumber = req.params.page;
     let pageOffset = (pageNumber - 1) * pageLimit;
 
@@ -41,7 +41,25 @@ router.get('/all/:page', function (req, res, next) {
 	}).catch(function(err){
         res.status(500).send('Critical error');
     });
-
 });
+
+router.get('/:patronId', function(req, res, next){
+    Patron.findById(req.params.patronId, {
+        include: [
+            {
+                model: Loan
+            }
+        ]
+    }).then(function(patron){
+        if (patron){
+            res.render('patrons/patron_detail', {model: patron})
+        } else {
+            res.send('Patron ID requested does not exist.')    
+        }
+    }).catch(function(error){
+        res.send('Bad request')
+    })
+});
+
 
 module.exports = router;
