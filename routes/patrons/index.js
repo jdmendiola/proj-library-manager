@@ -47,7 +47,8 @@ router.get('/:patronId', function(req, res, next){
     Patron.findById(req.params.patronId, {
         include: [
             {
-                model: Loan
+                model: Loan,
+                include: [Book, Patron]
             }
         ]
     }).then(function(patron){
@@ -60,6 +61,5 @@ router.get('/:patronId', function(req, res, next){
         res.send('Bad request')
     })
 });
-
 
 module.exports = router;

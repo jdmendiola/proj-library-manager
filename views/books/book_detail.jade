@@ -70,7 +70,7 @@ block content
 						td
 							a(href=`/books/${model.id}`) #{model.title}
 						td
-							a(href=`/patron/${model.Loans[index].Patron.id}`) #{`${model.Loans[index].Patron.first_name} ${model.Loans[index].Patron.last_name}`}
+							a(href=`/patrons/${model.Loans[index].Patron.id}`) #{`${model.Loans[index].Patron.first_name} ${model.Loans[index].Patron.last_name}`}
 						td #{model.Loans[index].loaned_on}
 						td #{model.Loans[index].return_by}
 						td
