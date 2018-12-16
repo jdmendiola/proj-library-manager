@@ -20,11 +20,9 @@ table
 				td
 					a(href='/books/#{model[index].Book.id}') #{model[index].Book.title} 
 				td
-					a(href='patron_detail.html') #{model[index].Patron.first_name} #{model[index].Patron.last_name}
+					a(href='/patrons/#{model[index].Patron.id}') #{model[index].Patron.first_name} #{model[index].Patron.last_name}
 				td #{model[index].loaned_on}
 				td #{model[index].return_by}
 				td #{model[index].returned_on}
 				td 
 					a.button(href='return_book.html') Return Book
-
-		- console.log(model[0])
