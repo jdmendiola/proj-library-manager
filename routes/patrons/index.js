@@ -14,6 +14,65 @@ router.get('/all', function(req, res, next){
     res.status(200).render('patrons/all');
 });
 
+router.get('/:patronId', function(req, res, next){
+    Patron.findById(req.params.patronId, {
+        include: [
+            {
+                model: Loan,
+                include: [Book, Patron]
+            }
+        ]
+    }).then(function(patron){
+        if (patron){
+            res.render('patrons/patron_detail', {model: patron})
+        } else {
+            res.send('Patron ID requested does not exist.')    
+        }
+    }).catch(function(error){
+        res.send('Bad request')
+    })
+});
+
+router.put('/:patronId', function(req, res, next){
+    Patron.findById(req.params.patronId, {
+        include: [
+            {
+                model: Loan,
+                include: [Book, Patron]
+            }
+        ]
+    }).then(function(patron){
+        if (patron){
+            if (!isEqualModels(book.dataValues, req.body)){
+                return book.update(req.body)
+            } else {
+                let loaned = (book.Loans.length) ? true : false;
+                res.render('books/book_detail', {model: book, noChange: true, isLoaned: loaned})
+            }
+        } else {
+            res.send(404);
+        }
+    }).then(function(book){
+        res.redirect('/books/all');
+    }).catch(function(error){
+        if (error.name === 'SequelizeValidationError'){
+            Book.findById(req.params.bookId, {
+                include: [
+                    {
+                        model: Loan,
+                        include: [
+                            {model: Patron}
+                        ]
+                    }
+                ]
+            }).then(function(book){
+                let loaned = (book.Loans.length) ? true : false;
+                res.render('books/book_detail', {model: book, errors: error.errors, isLoaned: loaned});
+            });
+        }
+    });
+});
+
 router.get('/all/:page', function (req, res, next) {
 
     let pageLimit = 2;
@@ -41,25 +100,6 @@ router.get('/all/:page', function (req, res, next) {
 	}).catch(function(err){
         res.status(500).send('Critical error');
     });
-});
-
-router.get('/:patronId', function(req, res, next){
-    Patron.findById(req.params.patronId, {
-        include: [
-            {
-                model: Loan,
-                include: [Book, Patron]
-            }
-        ]
-    }).then(function(patron){
-        if (patron){
-            res.render('patrons/patron_detail', {model: patron})
-        } else {
-            res.send('Patron ID requested does not exist.')    
-        }
-    }).catch(function(error){
-        res.send('Bad request')
-    })
 });
 
 module.exports = router;
