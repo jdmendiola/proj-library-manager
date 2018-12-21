@@ -10,10 +10,6 @@ router.get('/', function (req, res, next) {
     res.redirect('/patrons/all/1');
 });
 
-router.get('/all', function(req, res, next){
-    res.status(200).render('patrons/all');
-});
-
 router.get('/:patronId', function(req, res, next){
     Patron.findById(req.params.patronId, {
         include: [
@@ -31,6 +27,35 @@ router.get('/:patronId', function(req, res, next){
     }).catch(function(error){
         res.send('Bad request')
     })
+});
+
+
+router.put('/:patronId', function(req, res, next){
+    Patron.findById(req.params.patronId, {
+        include: [
+            {
+                model: Loan,
+                include: [Book, Patron]
+            }
+        ]
+    }).then(function(patron){
+        return patron.update(req.body);    
+    }).then(function(patron){
+        res.redirect('/patrons/all/1');
+    }).catch(function(error){
+        if (error.name === 'SequelizeValidationError'){
+            Patron.findById(req.params.patronId, {
+                include: [
+                    {
+                        model: Loan,
+                        include: [Book, Patron]
+                    }
+                ]
+            }).then(function(patron){
+                res.render('patrons/patron_detail', {model: patron, errors: error.errors});
+            });
+        }
+    });
 });
 
 router.get('/all/:page', function (req, res, next) {

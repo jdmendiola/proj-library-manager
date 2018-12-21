@@ -4,25 +4,72 @@ block content
 
 	h1 Patron: #{model.first_name} #{model.last_name}
 
+	- var formErrors
+
+	-
+		if (errors){
+			formErrors = errors.map(function(error){
+				return error.message;
+			});
+
+			var firstNameError = formErrors.find(function(fieldError){
+				return fieldError.includes('First');
+			});
+
+			var lastNameError = formErrors.find(function(fieldError){
+				return fieldError.includes('Last name');
+			});
+
+			var addressError = formErrors.find(function(fieldError){
+				return fieldError.includes('Address');
+			});
+
+			var emailError = formErrors.find(function(fieldError){
+				return fieldError.includes('Email');
+			});
+
+			var libraryError = formErrors.find(function(fieldError){
+				return fieldError.includes('Library');
+			});
+
+			var zipError = formErrors.find(function(fieldError){
+				return fieldError.includes('Zip');
+			});
+
+			console.log(addressError);
+		}
+	
 	form(action='/patrons/' + model.id + '?_method=PUT' method='post' class='form-update')
-		p
+		p.field
 			label(for='first_name') First Name
 			input#first_name(type='text', value='#{model.first_name}' name="first_name")
-		p
+			if firstNameError
+				span= firstNameError
+		p.field
 			label(for='last_name') Last Name
 			input#last_name(type='text', value='#{model.last_name}' name="last_name")
-		p
+			if lastNameError
+				span= lastNameError
+		p.field
 			label(for='address')  Address
 			input#address(type='text', value='#{model.address}' name="address")
-		p
+			if addressError
+				span= addressError
+		p.field
 			label(for='email') Email
 			input#email(type='text', value='#{model.email}' name="email")
-		p
+			if emailError
+				span= emailError
+		p.field
 			label(for='library_id') Library ID
 			input#library_id(type='text', value='#{model.library_id}' name="library_id")
-		p
+			if libraryError
+				span= libraryError
+		p.field
 			label(for='zip_code') Zip Code
 			input#zip_code(type='text', value='#{model.zip_code}' name="zip_code")
+			if zipError
+				span= zipError
 		p
 			input(type='submit', value='Update')
 
