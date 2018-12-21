@@ -33,46 +33,6 @@ router.get('/:patronId', function(req, res, next){
     })
 });
 
-router.put('/:patronId', function(req, res, next){
-    Patron.findById(req.params.patronId, {
-        include: [
-            {
-                model: Loan,
-                include: [Book, Patron]
-            }
-        ]
-    }).then(function(patron){
-        if (patron){
-            if (!isEqualModels(book.dataValues, req.body)){
-                return book.update(req.body)
-            } else {
-                let loaned = (book.Loans.length) ? true : false;
-                res.render('books/book_detail', {model: book, noChange: true, isLoaned: loaned})
-            }
-        } else {
-            res.send(404);
-        }
-    }).then(function(book){
-        res.redirect('/books/all');
-    }).catch(function(error){
-        if (error.name === 'SequelizeValidationError'){
-            Book.findById(req.params.bookId, {
-                include: [
-                    {
-                        model: Loan,
-                        include: [
-                            {model: Patron}
-                        ]
-                    }
-                ]
-            }).then(function(book){
-                let loaned = (book.Loans.length) ? true : false;
-                res.render('books/book_detail', {model: book, errors: error.errors, isLoaned: loaned});
-            });
-        }
-    });
-});
-
 router.get('/all/:page', function (req, res, next) {
 
     let pageLimit = 2;
