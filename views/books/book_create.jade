@@ -25,6 +25,9 @@ block content
 
 	h1 New Book
 
+	div.display-errors
+		h4.heading-error The following fields have errors:
+
 	form(method='POST' action='/books/create' class='form-update')
 		p.field
 			label(for='title') Title
