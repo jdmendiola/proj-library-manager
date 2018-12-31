@@ -35,8 +35,6 @@ block content
 			var zipError = formErrors.find(function(fieldError){
 				return fieldError.includes('Zip');
 			});
-
-			console.log(addressError);
 		}
 	
 	form(action='/patrons/' + model.id + '?_method=PUT' method='post' class='form-update')
