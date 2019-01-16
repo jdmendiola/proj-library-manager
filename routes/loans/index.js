@@ -66,7 +66,7 @@ router.get('/all', function(req, res, next){
                 {model: Book}
             ]    
         }).then(function(loan){
-            res.render('loans/all', {model: loan})
+            res.render('loans/all', {model: loan});
         });
     }
 });
@@ -93,8 +93,19 @@ router.get('/create', function(req, res, next){
     });
 });
 
-router.post('/create', function(req, res, next){
+router.get('/:loanId', function(req, res, next){
 
+    let today = dayjs().format('YYYY-MM-DD');
+
+    Loan.findById(req.params.loanId, {
+        include: [
+            {model: Patron},
+            {model: Book}
+        ]
+    }).then(function(loan){
+        res.render('loans/loan_return', {model: loan, date: today});
+        // res.json(loan);
+    });
 });
 
 module.exports = router;

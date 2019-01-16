@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       validate: { notEmpty: {msg: 'You have submitted a blank entry. Return by date cannot be blank. '}}
     },
-    returned_on: DataTypes.DATE
+    returned_on: {
+      type: DataTypes.DATEONLY,
+      validate: { notEmpty: {msg: 'You have submitted a blank entry. Returned on date cannot be blank. '}}
+    }
   }, {
       timestamps: false,
       underscored: true

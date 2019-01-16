@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+
+	-
+		var formErrors;
+		if (model.errors){
+			var returnedOnError = formErrors.find(function(fieldError){
+				return fieldError.includes('Returned');
+			});
+		}
+
+
+	h1 Patron: Return Book
+	p
+		strong Book Title: 
+		| #{model.Book.title}
+	p
+		strong Loaned By: 
+		| #{model.Patron.first_name} #{model.Patron.last_name}
+	p
+		strong Loaned On: 
+		| #{model.loaned_on}
+	p
+		strong Return By: 
+		| #{model.return_by}
+
+	form(method='POST' action='/loans/return' class='form-update')
+		p
+			label(for='returned_on') Returned on:
+			input#returned_on(type='text', name="returned_on" value='#{date}')
+			if returnedOnError
+				span= returnedOnError
+		p
+			input(type='submit', value='Return Book')
