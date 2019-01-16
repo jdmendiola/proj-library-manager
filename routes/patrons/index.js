@@ -10,6 +10,35 @@ router.get('/', function (req, res, next) {
     res.redirect('/patrons/all/1');
 });
 
+router.post('/', function(req, res, next){
+    if (req.body !== 'undefined'){
+        let column = req.body.search_column;
+        let searchQuery = req.body.search_query;
+
+        Patron.findAll({
+            order: ['first_name'],
+            where: {
+                [column]: {
+                    [Op.like]: `%${searchQuery}%`
+                }
+            }
+        }).then(function(patron){
+            if (patron.length > 0){
+                res.status(200).render('patrons/all', {
+                    model: patron,
+                    filter: true
+                });
+            } else {
+                res.send('No results found');
+            }
+        }).catch(function(err){
+            res.send('Bad query for database');
+        });
+    } else {
+        res.send('No inputs found');
+    }
+});
+
 router.get('/:patronId', function(req, res, next){
     Patron.findById(req.params.patronId, {
         include: [

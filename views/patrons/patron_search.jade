@@ -1,0 +1,8 @@
+div.search-header Search patrons by a category:
+form(method='POST' action='/patrons' class='search-fields')
+		select(name='search_column' style='height: 38px')
+			option(value='first_name') First Name
+			option(value='last_name') Last Name
+			option(value='library_id') Library ID
+		input(type='text' name='search_query')
+		input(type='submit' value='Submit')
