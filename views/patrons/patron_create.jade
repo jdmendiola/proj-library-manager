@@ -1,0 +1,72 @@
+extends ../layout
+
+block content
+
+	h1 New Patron
+
+	- var formErrors
+
+	-
+		if (errors){
+			formErrors = errors.map(function(error){
+				return error.message;
+			});
+
+			var firstNameError = formErrors.find(function(fieldError){
+				return fieldError.includes('First');
+			});
+
+			var lastNameError = formErrors.find(function(fieldError){
+				return fieldError.includes('Last name');
+			});
+
+			var addressError = formErrors.find(function(fieldError){
+				return fieldError.includes('Address');
+			});
+
+			var emailError = formErrors.find(function(fieldError){
+				return fieldError.includes('Email');
+			});
+
+			var libraryError = formErrors.find(function(fieldError){
+				return fieldError.includes('Library');
+			});
+
+			var zipError = formErrors.find(function(fieldError){
+				return fieldError.includes('Zip');
+			});
+		}
+	
+	form(method='POST' action="/patrons/create" class='form-update')
+		p.field
+			label(for='first_name') First Name
+			input#first_name(type='text', name="first_name")
+			if firstNameError
+				span= firstNameError
+		p.field
+			label(for='last_name') Last Name
+			input#last_name(type='text', name="last_name")
+			if lastNameError
+				span= lastNameError
+		p.field
+			label(for='address')  Address
+			input#address(type='text', name="address")
+			if addressError
+				span= addressError
+		p.field
+			label(for='email') Email
+			input#email(type='text', name="email")
+			if emailError
+				span= emailError
+		p.field
+			label(for='library_id') Library ID
+			input#library_id(type='text', name="library_id")
+			if libraryError
+				span= libraryError
+		p.field
+			label(for='zip_code') Zip Code
+			input#zip_code(type='text', name="zip_code")
+			if zipError
+				span= zipError
+		p
+			input(type='submit', value='Create New Patron')
