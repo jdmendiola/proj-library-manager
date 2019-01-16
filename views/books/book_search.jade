@@ -1,5 +1,6 @@
-form(method='POST' action='/books')
-		select(name='search_column')
+div.search-header Search by a category:
+form(method='POST' action='/books' class='search-fields')
+		select(name='search_column' style='height: 38px')
 			option(value='title') Book Title
 			option(value='author') Book Author
 			option(value='genre') Book Genre

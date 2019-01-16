@@ -44,6 +44,32 @@ a.active{
 form a.button, input[type=submit] {
   margin-left: 140px;
 }
+
+.search-fields input[type=submit]{
+  margin-left: 15px;
+  padding: 10px 14px 10px;
+}
+
+.search-fields{
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.search-header{
+  display: inline-block;
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.search-fields input[type=text], .search-fields select{
+  border: 1px solid #ccc;
+  margin-left: 0;
+}
+
+.search-fields select{
+  margin-right: 15px;
+}
+
 input[type=submit] {
   border: 0;
 }
@@ -113,4 +139,5 @@ input {
 }
 input[type=text], select {
   margin-left: 10px;
+  border: 1px solid #ccc;
 }
