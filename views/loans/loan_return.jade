@@ -25,7 +25,7 @@ block content
 		strong Return By: 
 		| #{model.return_by}
 
-	form(method='POST' action='/loans/return' class='form-update')
+	form(action='/loans/' + model.id + '?_method=PUT' method='post' class='form-update')
 		p
 			label(for='returned_on') Returned on:
 			input#returned_on(type='text', name="returned_on" value='#{date}')

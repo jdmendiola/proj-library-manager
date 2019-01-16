@@ -71,6 +71,18 @@ router.get('/all', function(req, res, next){
     }
 });
 
+router.put('/:loanId', function(req, res){
+    Loan.findById(req.params.loanId, {
+        include: [
+            {model: Patron},
+            {model: Book}
+        ]
+    }).then(function(loan){
+        loan.update(req.body);
+        res.redirect('/loans/all');
+    });
+});
+
 router.post('/create', function(req, res, next){
     Loan.create(req.body).then(function(loan){
         res.redirect('/loans/all');
