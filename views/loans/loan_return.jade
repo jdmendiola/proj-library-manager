@@ -4,7 +4,11 @@ block content
 
 	-
 		var formErrors;
-		if (model.errors){
+		if (errors){
+			formErrors = errors.map(function(error){
+				return error.message;
+			});
+
 			var returnedOnError = formErrors.find(function(fieldError){
 				return fieldError.includes('Returned');
 			});

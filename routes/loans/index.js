@@ -71,15 +71,28 @@ router.get('/all', function(req, res, next){
     }
 });
 
-router.put('/:loanId', function(req, res){
+router.put('/:loanId', function(req, res, next){
     Loan.findById(req.params.loanId, {
         include: [
             {model: Patron},
             {model: Book}
         ]
     }).then(function(loan){
-        loan.update(req.body);
-        res.redirect('/loans/all');
+        return loan.update(req.body);
+    }).then(function(loan){
+        res.redirect('/loans/all'); 
+    }).catch(function(error){
+        if (error.name === "SequelizeValidationError"){
+            Loan.findById(req.params.loanId, {
+                include: [
+                    {model: Patron},
+                    {model: Book}
+                ]
+            }).then(function(loan){
+                let today = dayjs().format('YYYY-MM-DD');
+                res.render('loans/loan_return', {model: loan, date: today, errors: error.errors});
+            })   
+        }
     });
 });
 
