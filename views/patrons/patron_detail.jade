@@ -90,6 +90,6 @@ block content
 							a(href=`/patrons/${model.id}`) #{`${model.first_name} ${model.last_name}`}
 						td #{model.Loans[index].loaned_on}
 						td #{model.Loans[index].return_by}
-						td
+						td #{model.Loans[index].returned_on}
 						td
 							a.button(href='/loans/#{model.Loans[index].id}') Return Book

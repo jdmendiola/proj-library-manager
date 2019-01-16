@@ -42,7 +42,7 @@ a.active{
     color: black;
 }
 form a.button, input[type=submit] {
-  margin-left: 140px;
+  margin-left: 0px;
 }
 
 .search-fields input[type=submit]{

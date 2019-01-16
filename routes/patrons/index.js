@@ -10,6 +10,39 @@ router.get('/', function (req, res, next) {
     res.redirect('/patrons/all/1');
 });
 
+router.get('/all', function(req, res, next){
+    res.redirect('/patrons/all/1');
+});
+
+router.get('/all/:page', function (req, res, next) {
+
+    let pageLimit = 2;
+    let pageNumber = req.params.page;
+    let pageOffset = (pageNumber - 1) * pageLimit;
+
+	Patron.findAndCountAll({
+		order: [ ['id'] ],
+		offset: pageOffset,
+        limit: pageLimit
+	}).then(function (patron) {
+        let pages = Math.ceil(patron.count / pageLimit);
+
+        if (pageNumber <= pages){
+            res.status(200).render('patrons/all', {
+                model: patron.rows,
+                pagination: pages,
+                current: pageNumber,
+                filter: false
+            });
+        } else {
+            res.send('That page number does not exist.');
+        }
+		
+	}).catch(function(err){
+        res.status(500).send('Critical error');
+    });
+});
+
 router.post('/', function(req, res, next){
     if (req.body !== 'undefined'){
         let column = req.body.search_column;
@@ -97,35 +130,6 @@ router.put('/:patronId', function(req, res, next){
                 res.render('patrons/patron_detail', {model: patron, errors: error.errors});
             });
         }
-    });
-});
-
-router.get('/all/:page', function (req, res, next) {
-
-    let pageLimit = 2;
-    let pageNumber = req.params.page;
-    let pageOffset = (pageNumber - 1) * pageLimit;
-
-	Patron.findAndCountAll({
-		order: [ ['id'] ],
-		offset: pageOffset,
-        limit: pageLimit
-	}).then(function (patron) {
-        let pages = Math.ceil(patron.count / pageLimit);
-
-        if (pageNumber <= pages){
-            res.status(200).render('patrons/all', {
-                model: patron.rows,
-                pagination: pages,
-                current: pageNumber,
-                filter: false
-            });
-        } else {
-            res.send('That page number does not exist.');
-        }
-		
-	}).catch(function(err){
-        res.status(500).send('Critical error');
     });
 });
 
